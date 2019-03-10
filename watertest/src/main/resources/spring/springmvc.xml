@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- 扫描 -->
+    <context:component-scan base-package="com.lihaojie">
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- 注解驱动 -->
+    <!-- 注册校验器驱动，不然无法获得校验信息 -->
+    <mvc:annotation-driven validator="validator"></mvc:annotation-driven>
+    <!-- 配置数据校验器， -->
+    <!-- 定义工厂bean，工厂中校验器 -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    	<!-- 校验器工厂中注入校验器 -->
+    	<property name="providerClass" value="org.hibernate.validator.HibernateValidator"></property>
+    	<!-- 工厂中添加校验失败信息 -->
+    	<property name="validationMessageSource" ref="messageSource"></property>
+    </bean>
+    <!-- 读取校验失败信息的类，定义此类的bean，用它来读取配置文件 -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    	<property name="basenames">
+    		<list>
+    			<value>classpath:spring/ValidationMessage</value>
+    		</list>
+    	</property>
+    	<!-- 资源文件编码格式 -->
+     	<property name="fileEncodings" value="utf-8"></property>
+     	<!-- 对资源文件内容缓存时间，单位秒 -->
+     	<property name="cacheSeconds" value="120"></property>
+    </bean>
+    
+    <!-- 日期转换 -->
+    
+    <!-- 上传解析器配置 -->
+    <!-- 解析器的名称id必须设置为当前的名称 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<!-- 设置上传文件的最大尺寸，单位B -->
+     	<property name="maxUploadSize" value="10285760"></property>
+     	<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 类似懒加载的属性.可以定义该属性.让解析文件的时候再抛异常 -->
+     	<property name="resolveLazily" value="true"></property>
+    </bean>
+    
+    <!-- 拦截器 -->
+    <!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.ujiuye.intercept.BackPageInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+    <!-- 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    </bean>
+    
+</beans>
