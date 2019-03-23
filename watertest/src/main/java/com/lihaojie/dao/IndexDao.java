@@ -10,4 +10,6 @@ public interface IndexDao {
 
 	int selectpageCount() throws Exception;
 
+	List<WaterValue> getIndexDataGraph();
+
 }

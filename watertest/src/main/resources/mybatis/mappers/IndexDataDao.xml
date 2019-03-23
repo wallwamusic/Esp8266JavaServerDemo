@@ -4,10 +4,14 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lihaojie.dao.IndexDao">
 	<select id="selectIndexData" parameterType="integer" resultType="watervalue">
-		select * from watervalue limit #{currentPage},10
+		select * from watervalue order by valuetime desc limit #{currentPage},10
 	</select>
-	
+
 	<select id="selectpageCount" resultType="int">
 		select count(*) from watervalue
+	</select>
+	
+	<select id="getIndexDataGraph" resultType="watervalue">
+		select valuetime,tempvalue,humivalue from watervalue order by valuetime desc limit 10
 	</select>
 </mapper>

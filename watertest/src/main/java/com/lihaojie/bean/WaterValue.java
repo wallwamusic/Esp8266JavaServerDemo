@@ -3,12 +3,16 @@ package com.lihaojie.bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+
 public class WaterValue implements Serializable {
 
 	private static final long serialVersionUID = -4312603417509542093L;
 	private Integer collectnum;
-	private Integer tempvalue;
-	private Integer humivalue;
+	@NotNull
+	private String tempvalue;
+	@NotNull
+	private String humivalue;
 	private Timestamp valuetime;
 
 	public Integer getCollectnum() {
@@ -19,19 +23,21 @@ public class WaterValue implements Serializable {
 		this.collectnum = collectnum;
 	}
 
-	public Integer getTempvalue() {
+	
+
+	public String getTempvalue() {
 		return tempvalue;
 	}
 
-	public void setTempvalue(Integer tempvalue) {
+	public void setTempvalue(String tempvalue) {
 		this.tempvalue = tempvalue;
 	}
 
-	public Integer getHumivalue() {
+	public String getHumivalue() {
 		return humivalue;
 	}
 
-	public void setHumivalue(Integer humivalue) {
+	public void setHumivalue(String humivalue) {
 		this.humivalue = humivalue;
 	}
 

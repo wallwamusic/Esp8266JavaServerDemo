@@ -10,4 +10,6 @@ public interface IndexService {
 
 	int getpageCount() throws Exception;
 
+	List<WaterValue> getIndexDataGraph();
+
 }

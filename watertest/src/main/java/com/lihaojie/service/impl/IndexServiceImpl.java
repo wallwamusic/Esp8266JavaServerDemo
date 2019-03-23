@@ -24,4 +24,9 @@ public class IndexServiceImpl implements IndexService {
 		return (int) Math.ceil((double)indexDao.selectpageCount()/10);
 	}
 
+	@Override
+	public List<WaterValue> getIndexDataGraph() {
+		return indexDao.getIndexDataGraph();
+	}
+
 }
